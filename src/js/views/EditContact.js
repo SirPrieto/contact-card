@@ -1,21 +1,32 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import PropTypes from "prop-types";
 
-export const AddContact = () => {
+export const EditContact = props => {
 	const { store, actions } = useContext(Context);
-	const [contact, setContact] = useState({ name: "", email: "", phone: "", address: "" });
 	const handleOnChange = e => {
 		setContact({ ...contact, [e.target.name]: e.target.value });
 	};
+	const valueContact = store.contacts.find(contact => {
+		return contact.id == props.match.params.id;
+	});
+	const [contact, setContact] = useState({
+		name: valueContact.full_name,
+		email: valueContact.email,
+		phone: valueContact.phone,
+		address: valueContact.address,
+		id: valueContact.id
+	});
 	return (
 		<div className="container">
 			<div>
-				<h1 className="text-center mt-5">Add a new contact</h1>
+				<h1 className="text-center mt-5">Edit Contact</h1>
 				<form>
 					<div className="form-group">
 						<label>Full Name</label>
 						<input
+							value={contact.name}
 							onChange={handleOnChange}
 							name="name"
 							type="text"
@@ -26,6 +37,7 @@ export const AddContact = () => {
 					<div className="form-group">
 						<label>Email</label>
 						<input
+							value={contact.email}
 							onChange={handleOnChange}
 							name="email"
 							type="email"
@@ -36,6 +48,7 @@ export const AddContact = () => {
 					<div className="form-group">
 						<label>Phone</label>
 						<input
+							value={contact.phone}
 							onChange={handleOnChange}
 							name="phone"
 							type="phone"
@@ -46,6 +59,7 @@ export const AddContact = () => {
 					<div className="form-group">
 						<label>Address</label>
 						<input
+							value={contact.address}
 							onChange={handleOnChange}
 							name="address"
 							type="text"
@@ -54,7 +68,7 @@ export const AddContact = () => {
 						/>
 					</div>
 					<button
-						onClick={() => actions.addContact(contact)}
+						onClick={() => actions.saveContact(contact)}
 						type="button"
 						className="btn btn-primary form-control">
 						save
@@ -66,4 +80,8 @@ export const AddContact = () => {
 			</div>
 		</div>
 	);
+};
+
+EditContact.propTypes = {
+	match: PropTypes.object
 };
