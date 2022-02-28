@@ -8,7 +8,8 @@ import { Modal } from "../component/Modal";
 export const Contacts = () => {
 	const { store, actions } = useContext(Context);
 	const [state, setState] = useState({
-		showModal: false
+		showModal: false,
+		contactToDelete: null
 	});
 
 	return (
@@ -24,7 +25,7 @@ export const Contacts = () => {
 						{store.contacts.map((item, index) => {
 							return (
 								<ContactCard
-									onDelete={() => setState({ showModal: true })}
+									onDelete={() => setState({ showModal: true, contactToDelete: item.id })}
 									key={index}
 									contact={item}
 								/>
@@ -33,7 +34,7 @@ export const Contacts = () => {
 					</ul>
 				</div>
 			</div>
-			<Modal show={state.showModal} onClose={() => setState({ showModal: false })} />
+			<Modal show={state.showModal} id={state.contactToDelete} onClose={() => setState({ showModal: false })} />
 		</div>
 	);
 };

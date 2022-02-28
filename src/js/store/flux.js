@@ -39,6 +39,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						address: contact.address
 					})
 				});
+			},
+
+			deleteContact: id => {
+				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
+					method: "DELETE"
+				});
 			}
 		}
 	};
