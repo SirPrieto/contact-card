@@ -24,7 +24,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: contact.email,
 						address: contact.address
 					})
-				});
+				})
+					.then(response => response.json())
+					.then(() => {
+						getActions().getfetchData();
+					});
 			},
 
 			saveContact: contact => {
@@ -38,13 +42,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email: contact.email,
 						address: contact.address
 					})
-				});
+				})
+					.then(response => response.json())
+					.then(() => {
+						getActions().getfetchData();
+					});
 			},
 
 			deleteContact: id => {
 				fetch(`https://assets.breatheco.de/apis/fake/contact/${id}`, {
 					method: "DELETE"
-				});
+				})
+					.then(response => response.json())
+					.then(() => {
+						getActions().getfetchData();
+					});
 			}
 		}
 	};
